@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" const="text/html;charset=UTF-8" />
+    <link href="http://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="style.css" >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Beatmaker</title>
+  </head>
+
+  <body>
+	<div class="content">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="grid"></div>
+                </div>
+                <div class="col-md-2">
+                    <div class="controls">
+                        <button id="clear" type="button" class="btn btn-light">Clear</button>
+                        <button id="customize" type="button" class="btn btn-light">Modify</button>
+                    </div>
+		    <div>
+			<ul id="userList" class="list-group list-group-flush">
+				<li class="list-group-item"><u><strong>Active Users:</strong></u></li>
+				<li class="list-group-item"></li> <!--this user -->
+				<li class="list-group-item"></li>
+				<li class="list-group-item"></li>
+				<li class="list-group-item"></li>
+				<li class="list-group-item"></li>
+				<li class="list-group-item"></li>
+				<li class="list-group-item"></li>
+				<li class="list-group-item"></li>
+				<li class="list-group-item"></li>
+				<li class="list-group-item"></li>
+				<li class="list-group-item"></li>
+				<li class="list-group-item"></li> <!--and X more...-->
+			</ul>
+		    </div>
+                </div>
+            </div>
+        </div>
+	<div id="newUsername" class="modal" tabindex="-1" role="dialog" style="display: block">
+		<div class="modal-dialog" role="document">
+    			<div class="modal-content">
+      				<div class="modal-header">
+        				<h5 class="modal-title">Turn Up the Volume and Interact</h5>
+      				</div>
+      				<div class="modal-body">
+        				<p>&nbsp;&nbsp;&nbsp;This is a collaborative project, so other users can hear the changes you make. All of the sounds are provided by Glass Animals open-sourced from songs off of their upcoming album, Dreamland.<br>
+					&nbsp;&nbsp;&nbsp;Would you like to create your own username or use a default one?</p>
+      				</div>
+				<div class="modal-footer">
+                    <div class="input-group">
+					   <input id="createUsername" type="text" class="form-control" placeholder="Create a new username...">
+                       <div id="usernameFeedback" class="invalid-feedback"></div>
+                    </div>
+				</div>
+      				<div class="modal-footer">
+        				<button id="newUsernameBtn" type="button" class="btn btn-primary">Set New Username</button>
+        				<button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="closeUserBox()">Keep Default Username</button>
+      				</div>
+    			</div>
+  		</div>
+	</div>
+        <div id="customBox" class="card">
+            <div class="card-header">
+                Modify Which Sounds Are Available
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="brass" checked>
+                            <label class="form-check-label" for="brass">
+                                Brass
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="car_revv" checked>
+                            <label class="form-check-label" for="car_revv">
+                                Car Revv
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="cash" checked>
+                            <label class="form-check-label" for="cash">
+                                Cash
+                            </label>
+                    </div>
+                    
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="driftin1" checked>
+                            <label class="form-check-label" for="driftin1">
+                                Driftin #1
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="driftin2">
+                            <label class="form-check-label" for="driftin2">
+                                Driftin #2
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="driftin3">
+                            <label class="form-check-label" for="driftin3">
+                                Driftin #3
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="sniff" checked>
+                            <label class="form-check-label" for="sniff">
+                                Sniff
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="tokyo_driftinnn_hook" checked>
+                            <label class="form-check-label" for="tokyo_driftinnn_hook">
+                                Tokyo Driftinnn Hook
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="uh_oh" checked>
+                            <label class="form-check-label" for="uh_oh">
+                                Uh Oh
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="whipp" checked>
+                            <label class="form-check-label" for="whipp">
+                                Whipp
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="zel_aaargh" checked>
+                            <label class="form-check-label" for="zel_aaargh">
+                                Zel Aaargh
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="zel_yuh" checked>
+                            <label class="form-check-label" for="zel_yuh">
+                                Zel Yuh
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="b808_1" checked>
+                            <label class="form-check-label" for="b808_1">
+                                808 #1
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="b808_2">
+                            <label class="form-check-label" for="b808_2">
+                                808 #2
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="b808_3">
+                            <label class="form-check-label" for="b808_3">
+                                808 #3
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="b808_4">
+                            <label class="form-check-label" for="b808_4">
+                                808 #4
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="b808_5">
+                            <label class="form-check-label" for="b808_5">
+                                808 #5
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="b808_6">
+                            <label class="form-check-label" for="b808_6">
+                                808 #6
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="b808_7">
+                            <label class="form-check-label" for="b808_7">
+                                808 #7
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="b808_8">
+                            <label class="form-check-label" for="b808_8">
+                                808 #8
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="hat_1" checked>
+                            <label class="form-check-label" for="hat_1">
+                                Hat #1
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="hat_2">
+                            <label class="form-check-label" for="hat_2">
+                                Hat #2
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="hat_3">
+                            <label class="form-check-label" for="hat_3">
+                                Hat #3
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="hat_4">
+                            <label class="form-check-label" for="hat_4">
+                                Hat #4
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="kick" checked>
+                            <label class="form-check-label" for="kick">
+                                Kick
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="perc_1" checked>
+                            <label class="form-check-label" for="perc_1">
+                                Perc #1
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="perc_2">
+                            <label class="form-check-label" for="perc_2">
+                                Perc #2
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="perc_3">
+                            <label class="form-check-label" for="perc_3">
+                                Perc #3
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="perc_4">
+                            <label class="form-check-label" for="perc_4">
+                                Perc #4
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="perc_5">
+                            <label class="form-check-label" for="perc_5">
+                                Perc #5
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="perc_6">
+                            <label class="form-check-label" for="perc_6">
+                                Perc #6
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="perc_7">
+                            <label class="form-check-label" for="perc_7">
+                                Perc #7
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="perc_8">
+                            <label class="form-check-label" for="perc_8">
+                                Perc #8
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="perc_9">
+                            <label class="form-check-label" for="perc_9">
+                                Perc #9
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="perc_10">
+                            <label class="form-check-label" for="perc_10">
+                                Perc #10
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="saw_middle_8" checked>
+                            <label class="form-check-label" for="saw_middle_8">
+                                Saw Middle 8 #1
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="saw_middle_8_2">
+                            <label class="form-check-label" for="saw_middle_8_2">
+                                Saw Middle 8 #2
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="saw_middle_8_3">
+                            <label class="form-check-label" for="saw_middle_8_3">
+                                Saw Middle 8 #3
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="slappy_roller_thing" checked>
+                            <label class="form-check-label" for="slappy_roller_thing">
+                                Slappy Roller Thing
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="snr" checked>
+                            <label class="form-check-label" for="snr">
+                                SNR
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="string_1" checked>
+                            <label class="form-check-label" for="string_1">
+                                String #1
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="string_2">
+                            <label class="form-check-label" for="string_2">
+                                String #2
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="string_3">
+                            <label class="form-check-label" for="string_3">
+                                String #3
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="string_4">
+                            <label class="form-check-label" for="string_4">
+                                String #4
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="string_5">
+                            <label class="form-check-label" for="string_5">
+                                String #5
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="string_6">
+                            <label class="form-check-label" for="string_6">
+                                String #6
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="string_7">
+                            <label class="form-check-label" for="string_7">
+                                String #7
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="sub" checked>
+                            <label class="form-check-label" for="sub">
+                                Sub
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="tom_slam_1" checked>
+                            <label class="form-check-label" for="tom_slam_1">
+                                Tom Slam #1
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="tom_slam_2">
+                            <label class="form-check-label" for="tom_slam_2">
+                                Tom Slam #2
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="Your_Love_Sticks" checked>
+                            <label class="form-check-label" for="Your_Love_Sticks">
+                                Your Love Sticks
+                            </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="Your_Love_Tom_Bash" checked>
+                            <label class="form-check-label" for="Your_Love_Tom_Bash">
+                                Your Love Tom Bash
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="Your_Love_tubby_toms" checked>
+                            <label class="form-check-label" for="Your_Love_tubby_toms">
+                                Your Love tubby toms
+                            </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="punches" checked>
+                            <label class="form-check-label" for="punches">
+                                Punches
+                            </label>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <button id="update" type="button" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </div>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="beats.js"></script>
+  </body>
+</html>

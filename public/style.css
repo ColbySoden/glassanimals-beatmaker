@@ -1,0 +1,118 @@
+body {
+  background-color: #333!important;
+  display: flex;
+  justify-content: center;
+  align-content: center; 
+}
+
+.row{
+  height: 10%;
+}
+
+.pressed{
+	border-style: inset;
+	border-width: 5px;
+	border-color: lightgreen;
+}
+
+.grid {
+  padding: 20px;
+  overflow: hidden;
+  width: 80%;
+  height: auto;/*80em;*/
+  background-color: #333;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: row wrap; 
+}
+
+.grid button {
+  background: transparent;
+  border: 4px solid #fff;
+  padding: 0;
+  margin: 0;
+  height: 2em;
+  box-sizing: border-box;
+  flex: 1 1 5.25%;
+  margin: 1em .5% 5px;
+  position: relative;
+  outline: none; 
+}
+
+.grid button:hover {
+  background: rgba(255, 255, 255, 0.2); 
+}
+
+.grid button.on {
+  background: #fff; 
+}
+
+.grid button.on:hover {
+  background: rgba(255, 255, 255, 0.8); 
+}
+
+.grid button.nope{
+  display: none;
+}
+
+.grid button.shade {
+	background-color: #eb4034!important; 
+}
+
+.grid button.first::before {
+  content: attr(data-instrument);
+  position: absolute;
+  left: 0;
+  top: -1.5em;
+  color: #fff;
+  text-align: left; 
+}
+
+.grid button.ticked {
+  background: lightgreen; 
+}
+
+.grid button.ticked:hover {
+  background: rgba(144, 238, 144, 0.8); 
+}
+
+.controls {
+  padding: 20px;
+  display: flex;
+  flex-direction: column; 
+}
+
+.controls button {
+  background: #fff;
+  text-transform: uppercase;
+  border: 0;
+  display: inline-block;
+  margin-right: 10px;
+  width: 100px;
+  flex: 0 1 100px;
+  margin-bottom: 20px; 
+}
+
+#customBox{
+  display: none;
+  position: absolute;
+  border: 2px solid rgba(0,0,0,.125);
+  border-radius: .5rem;
+  box-shadow: 8px 8px 6px 0 rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  margin-top: 1%;
+  width: 60%;
+}
+
+.leftButton{
+  border-radius: 50%;
+}
+
+li{
+  background-color: rgb(51, 51, 51)!important;
+  color: white;
+  text-align: left;
+}
+
+/*# sourceMappingURL=style.css.map */
+

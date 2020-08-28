@@ -1,0 +1,22 @@
+
+> beatmaker@1.0.0 start /root/server
+> nodemon app
+
+[33m[nodemon] 2.0.4[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,json[39m
+[32m[nodemon] starting `node app.js`[39m
+starting....
+New user connected :: AnonymousUser42
+current users :: AnonymousUser42
+starting....
+New user connected :: AnonymousUser5
+current users :: AnonymousUser42,AnonymousUser5
+disconnection : AnonymousUser5
+current users :: AnonymousUser42
+starting....
+New user connected :: AnonymousUser62
+current users :: AnonymousUser42,AnonymousUser62
+new username : Yayap
+current users :: AnonymousUser42,Yayap
